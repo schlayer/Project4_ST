@@ -66,8 +66,7 @@ public class PerceptronClassifier {
 			Example ex = examples.get(j);
 			
 			this.update(ex.inputs, ex.output, schedule.alpha(i));
-			accuracy[i] = this.trainingReport(examples, i,
-					nsteps);
+			accuracy[i] = this.trainingReport(examples, i, nsteps);
 		}
 	}
 
