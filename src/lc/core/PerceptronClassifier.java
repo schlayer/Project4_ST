@@ -20,10 +20,10 @@ public class PerceptronClassifier {
 	
 	
 	/**
-	 * Update the weights of this LinearClassifer using the given
+	 * Update the weights of this PerceptronClassifier using the given
 	 * inputs/output example and learning rate alpha.
 	 */
-	public void update(double[] x, double y, double alpha){ // FIXME 
+	public void update(double[] x, double y, double alpha){
 		for (int i = 0; i < x.length; i++) {
 			double wi = weights[i]; 
 			double xi = x[i];
@@ -32,7 +32,7 @@ public class PerceptronClassifier {
 	}
 
 	/**
-	 * Threshold the given value using this LinearClassifier's
+	 * Threshold the given value using this PerceptronClassifier
 	 * threshold function.
 	 */
 	public double threshold(double z){
@@ -41,7 +41,7 @@ public class PerceptronClassifier {
 	}
 
 	/**
-	 * Evaluate the given input vector using this LinearClassifier
+	 * Evaluate the given input vector using this PerceptronClassifier
 	 * and return the output value.
 	 * This value is: Threshold(w dot x)
 	 */
@@ -50,7 +50,7 @@ public class PerceptronClassifier {
 	}
 	
 	/**
-	 * Train this LinearClassifier on the given Examples for the
+	 * Train this PerceptronClassifier on the given Examples for the
 	 * given number of steps, using given learning rate schedule.
 	 * ``Typically the learning rule is applied one example at a time,
 	 * choosing examples at random (as in stochastic gradient descent).''
@@ -64,20 +64,26 @@ public class PerceptronClassifier {
 		for (int i=1; i <= nsteps; i++) {
 			int j = random.nextInt(n);
 			Example ex = examples.get(j);
+			
 			this.update(ex.inputs, ex.output, schedule.alpha(i));
 			accuracy[i] = this.trainingReport(examples, i,  nsteps);
 		}
 	}
 
 	/**
-	 * Train this LinearClassifier on the given Examples for the
+	 * Train this PerceptronClassifier on the given Examples for the
 	 * given number of steps, using given constant learning rate.
 	 */
-	public void train(List<Example> examples, int nsteps, double constant_alpha) { // FIXME
-		train(examples, nsteps, new LearningRateSchedule() {
-			@Override
-			public double alpha(int t) { return constant_alpha; }
-		});
+	public void train(List<Example> examples, int nsteps, double constant_alpha) {
+		Random random = new Random();
+		int n = examples.size();
+		this.accuracy = new double[nsteps+1];
+		
+		for (int i=1; i <= nsteps; i++) {
+			int j = random.nextInt(n);
+			Example ex = examples.get(j);
+			accuracy[i] = this.trainingReport(examples, i,  nsteps);
+		}
 	}
 	
 	/**
@@ -92,7 +98,7 @@ public class PerceptronClassifier {
 	
 	
 	/**
-	 * Return the squared error per example for this Linear classifier
+	 * Return the squared error per example for this PerceptronClassifier
 	 * using the L2 (squared error) loss function.
 	 */
 	public double squaredErrorPerSample(List<Example> examples) {
@@ -107,7 +113,7 @@ public class PerceptronClassifier {
 
 	/**
 	 * Return the proportion of the given Examples that are classified
-	 * correctly by this LinearClassifier.
+	 * correctly by this PerceptronClassifier.
 	 * This is probably only meaningful for classifiers that use
 	 * a hard threshold. Use with care.
 	 */
