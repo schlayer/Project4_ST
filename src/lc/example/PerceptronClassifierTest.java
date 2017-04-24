@@ -13,7 +13,7 @@ public class PerceptronClassifierTest {
 
 	static String filename = "src/lc/example/earthquake-clean.data.txt";
 	static int nsteps = 10000;
-	static double alpha = 0;
+	static double alpha = 0.2;
 
 	/**
 	 * Train a PerceptronClassifier on a file of examples and

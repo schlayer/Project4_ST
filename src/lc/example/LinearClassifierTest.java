@@ -13,8 +13,8 @@ import lc.display.XYPlotCanvas;
 public class LinearClassifierTest {
 
 	static String filename = "src/lc/example/earthquake-clean.data.txt";
-	static int nsteps = 1000;
-	static double alpha = 0;
+	static int nsteps = 10000;
+	static double alpha = 0.1;
 
 	/**
 	 * Train a LinearClassifier on a file of examples and

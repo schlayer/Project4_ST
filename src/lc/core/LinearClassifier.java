@@ -27,11 +27,9 @@ public class LinearClassifier {
 		for (int i = 0; i < x.length; i++) {
 			double wi = weights[i]; 
 			double xi = x[i];							// Follow the update rule
-			weights[i] = wi + alpha*(y - eval(x)) * eval(x)*(1 - eval(x)) * xi;	
-			System.out.printf("%.5f\n", weights[i]);
-			if(weights[i] < 0 || weights[i] > 1) {
-				System.out.println("crap");
-			}
+			weights[i] = wi + alpha*(y - eval(x)) * eval(x)*(1.0 - eval(x)) * xi;	
+			//System.out.printf("%.5f\n", weights[i]);
+			
 		}
 	}
 	
@@ -44,7 +42,7 @@ public class LinearClassifier {
 	public double eval(double[] x) {
 		double z = VectorOps.dot(this.weights, x); 		// z is still w dot x
 		double log = 1.0 / (1.0 + Math.exp(-1 * z) ); 	// 1 / (1 + e^-z)
-		//System.out.printf("%.2f\n", log);
+
 		return log;
 		
 	}
@@ -66,7 +64,7 @@ public class LinearClassifier {
 			Example ex = examples.get(j);
 			
 			this.update(ex.inputs, ex.output, schedule.alpha(i));
-			accuracy[i] = this.trainingReport(examples, i,  nsteps);
+			accuracy[i] = this.trainingReport(examples, i, nsteps);
 		}
 	}
 
@@ -82,6 +80,8 @@ public class LinearClassifier {
 		for (int i=1; i <= nsteps; i++) {
 			int j = random.nextInt(n);
 			Example ex = examples.get(j);
+			
+			this.update(ex.inputs, ex.output, constant_alpha);
 			accuracy[i] = this.trainingReport(examples, i,  nsteps);
 		}
 	}
@@ -91,7 +91,7 @@ public class LinearClassifier {
 	 * Subclasses can override it to gather statistics or update displays.
 	 */
 	protected double trainingReport(List<Example> examples, int stepnum, int nsteps) {
-		double acc = accuracy(examples);
+		double acc = squaredErrorPerSample(examples);
 		System.out.println(stepnum + "\t" + acc);
 		return acc;
 	}
@@ -108,24 +108,9 @@ public class LinearClassifier {
 			double error = ex.output - result;
 			sum += error*error;
 		}
-		return sum / examples.size();
+		return 1- (sum / examples.size());
 	}
 
-	/**
-	 * Return the proportion of the given Examples that are classified
-	 * correctly by this LinearClassifier.
-	 * This is probably only meaningful for classifiers that use
-	 * a hard threshold. Use with care.
-	 */
-	public double accuracy(List<Example> examples) {
-		int ncorrect = 0;
-		for (Example ex : examples) {
-			double result = eval(ex.inputs);
-			if (result == ex.output) {
-				ncorrect += 1;
-			}
-		}
-		return (double)ncorrect / examples.size();
-	}
+	
 
 }
