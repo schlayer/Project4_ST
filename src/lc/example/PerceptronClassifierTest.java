@@ -12,8 +12,8 @@ import lc.display.XYPlotCanvas;
 public class PerceptronClassifierTest {
 
 	static String filename = "src/lc/example/earthquake-clean.data.txt";
-	static int nsteps = 1000;
-	static double alpha = 0.02;
+	static int nsteps = 50000;
+	static double alpha = 0.5;
 
 	/**
 	 * Train a PerceptronClassifier on a file of examples and

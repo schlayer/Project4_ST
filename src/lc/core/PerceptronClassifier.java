@@ -9,6 +9,7 @@ public class PerceptronClassifier {
 	
 	double[] weights;
 	public double[] accuracy;
+	boolean constAlpha = false;
 	
 	public PerceptronClassifier(double[] weights) {
 		this.weights = weights;
@@ -27,6 +28,12 @@ public class PerceptronClassifier {
 		for (int i = 0; i < x.length; i++) {
 			double wi = weights[i]; 
 			double xi = x[i];
+			
+			if (constAlpha) { // Prevent oscillation by inducing randomness
+				double randRange = 0.1;		// % of the weight to randomize 
+				xi *= Math.random()*randRange + (1 - randRange);
+			}
+			
 			weights[i] = wi + alpha * (y - eval(x)) * xi;	// Follow the update rule
 		}
 	}
@@ -60,6 +67,7 @@ public class PerceptronClassifier {
 		Random random = new Random();
 		int n = examples.size();
 		this.accuracy = new double[nsteps+1];
+		this.constAlpha = false;
 		
 		for (int i=1; i <= nsteps; i++) {
 			int j = random.nextInt(n);
@@ -78,6 +86,7 @@ public class PerceptronClassifier {
 		Random random = new Random();
 		int n = examples.size();
 		this.accuracy = new double[nsteps+1];
+		this.constAlpha = true;
 		
 		for (int i=1; i <= nsteps; i++) {
 			int j = random.nextInt(n);
