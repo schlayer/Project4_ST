@@ -11,8 +11,8 @@ import lc.display.XYPlotCanvas;
 
 public class PerceptronClassifierTest {
 
-	static String filename = "src/lc/example/earthquake-clean.data.txt";
-	static int nsteps = 50000;
+	static String filename = "src/lc/example/earthquake-noisy.data.txt";
+	static int nsteps = 5000;
 	static double alpha = 0.5;
 
 	/**
@@ -29,9 +29,14 @@ public class PerceptronClassifierTest {
 			System.out.println("\n\tUsing default values!!!\n");
 		}
 		else {
-			filename = argv[0];
+			filename = "src/lc/example/" + argv[0];
 			nsteps = Integer.parseInt(argv[1]);
 			alpha = Double.parseDouble(argv[2]);
+		}
+		
+		if (nsteps < 1100) {
+			System.out.println("Number of steps must be at least 1100!");
+			nsteps = 1100;
 		}
 	
 		System.out.println("filename: " + filename);
@@ -47,15 +52,19 @@ public class PerceptronClassifierTest {
 		if (alpha > 0) {
 			classifier.train(examples, nsteps, alpha);
 		} else {
+			System.out.println("Utilizing Decaying Learning Rate.");
 			LearningRateSchedule sch = new LearningRateSchedule();
-			classifier.train(examples, 100000, sch);
+			classifier.train(examples, nsteps, sch);
 		}
 		
 		double[] accuracyReport = classifier.accuracy;
 		int steps = accuracyReport.length;
+		
+		display.lines();
 		for (int s = 1; s < steps; s += nsteps/display.getWidth()) {
 			display.addPoint(1.0*s/steps, accuracyReport[s]);
 		}
+		
 		
 		
 	}

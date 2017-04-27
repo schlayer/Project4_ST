@@ -9,7 +9,7 @@ public class ClassifierDisplay extends JFrame {
 	public ClassifierDisplay(String title) {
 		setTitle(title);
 		canvas = new XYPlotCanvas();
-		canvas.setPreferredSize(new Dimension(640, 480));
+		canvas.setPreferredSize(new Dimension(1000, 500));
 		add(canvas);
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -18,6 +18,10 @@ public class ClassifierDisplay extends JFrame {
 	
 	protected XYPlotCanvas canvas;
 	protected int lastx, lasty;
+	
+	public void lines() {
+		canvas.drawScale();
+	}
 	
 	public void addPoint(double x, double y) {
 		int xx = (int)(x * getWidth());
