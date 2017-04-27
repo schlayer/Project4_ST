@@ -5,16 +5,16 @@ import java.util.Random;
 
 import math.util.VectorOps;
 
-public class LinearClassifier {
+public class LogisticClassifier {
 	
 	double[] weights;
 	public double[] accuracy;
 	
-	public LinearClassifier(double[] weights) {
+	public LogisticClassifier(double[] weights) {
 		this.weights = weights;
 	}
 	
-	public LinearClassifier(int ninputs) {
+	public LogisticClassifier(int ninputs) {
 		this.weights = new double[ninputs];
 	}
 	
@@ -92,7 +92,7 @@ public class LinearClassifier {
 	 */
 	protected double trainingReport(List<Example> examples, int stepnum, int nsteps) {
 		double acc = squaredErrorPerSample(examples);
-		System.out.println(stepnum + "\t" + acc);
+		//System.out.println(stepnum + "\t" + acc);
 		return acc;
 	}
 	

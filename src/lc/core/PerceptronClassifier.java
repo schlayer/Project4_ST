@@ -103,7 +103,7 @@ public class PerceptronClassifier {
 	 */
 	protected double trainingReport(List<Example> examples, int stepnum, int nsteps) {
 		double acc = accuracy(examples);
-		System.out.println(stepnum + "\t" + acc);
+		//System.out.println(stepnum + "\t" + acc);
 		return acc;
 	}
 	
