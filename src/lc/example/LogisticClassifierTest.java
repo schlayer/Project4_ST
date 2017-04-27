@@ -13,7 +13,7 @@ import lc.display.XYPlotCanvas;
 public class LogisticClassifierTest {
 
 	static String filename = "src/lc/example/earthquake-noisy.data.txt";
-	static int nsteps = 6000;
+	static int nsteps = 100000;
 	static double alpha = 0.1;
 
 	/**
@@ -44,7 +44,7 @@ public class LogisticClassifierTest {
 		System.out.println("nsteps: " + nsteps);
 		System.out.println("alpha: " + alpha);
 		
-		ClassifierDisplay display = new ClassifierDisplay("LinearClassifier: " + filename);
+		ClassifierDisplay display = new ClassifierDisplay("LogisticClassifier: " + filename);
 		List<Example> examples = Data.readFromFile(filename);
 		
 		int ninputs = examples.get(0).inputs.length; 
