@@ -44,9 +44,11 @@ public class WillWaitProblem extends Problem {
 		for (Example e : examples) {
 			System.out.println(e);
 		}
+		/*
 		DecisionTree tree = new DecisionTreeLearner(problem).learn(examples);
 		tree.dump();
 		tree.test(examples);
+		*/
 	}
 
 }
